@@ -214,7 +214,7 @@ class Test {
     test('should return false value when explicitly exist in cell', (t) => {
       const givenHeader = ['a', 'b', 'c']
       const givenRows = [
-        { c: [{ v: 1, f: '1' }, { v: 'FALSE', f: 'FALSE' }, { v: false, f: 'false' }] },
+        { c: [{ v: 1, f: '1' }, { v: 'FALSE', f: 'FALSE' }, { v: false, f: 'false' }] }
       ]
 
       const result = this.parser.applyHeaderIntoRows(givenHeader, givenRows)
@@ -227,7 +227,7 @@ class Test {
     test('should return date string when date exists in cell', (t) => {
       const givenHeader = ['a', 'b', 'c']
       const givenRows = [
-        { c: [{ v: 1, f: '1' }, { v: 'Date(2024,0,1)', f: '2024-01-01' }, { v: 'Date(2024,11,1)', f: '2024-12-01' }] },
+        { c: [{ v: 1, f: '1' }, { v: 'Date(2024,0,1)', f: '2024-01-01' }, { v: 'Date(2024,11,1)', f: '2024-12-01' }] }
       ]
 
       const result = this.parser.applyHeaderIntoRows(givenHeader, givenRows)
@@ -242,7 +242,7 @@ class Test {
 
       const givenHeader = ['a', 'b', 'c']
       const givenRows = [
-        { c: [{ v: 1, f: '1' }, { v: 'Date(2024,0,1)', f: '2024-01-01' }, { v: 'Date(2024,11,1)', f: '2024-12-01' }] },
+        { c: [{ v: 1, f: '1' }, { v: 'Date(2024,0,1)', f: '2024-01-01' }, { v: 'Date(2024,11,1)', f: '2024-12-01' }] }
       ]
 
       const result = this.parser.applyHeaderIntoRows(givenHeader, givenRows)
@@ -267,7 +267,7 @@ class Test {
       t.deepEqual(result, expected, 'Result for Sheet1 should match expected array')
       t.end()
     })
-    
+
     test('parse method should return correct array for Sheet2 when sheetId is specified', async (t) => {
       this.parser.id = '10WDbAPAY7Xl5DT36VuMheTPTTpqx9x0C5sDCnh4BGps'
       const sheetName = 'Sheet1' // should be ignored
@@ -323,7 +323,7 @@ class Test {
       // Test with string option
       this.parser.setOption('test-sheet-name')
       t.equal(this.parser.sheetName, 'test-sheet-name', 'Sheet name should be set from string option')
-      
+
       // Test with object option
       const options = { sheetName: 'test', sheetId: '123', useFormattedDate: true }
       this.parser.setOption(options)
@@ -354,18 +354,18 @@ class Test {
 
     test('getSpreadsheetDataUsingFetch method should handle errors properly', async (t) => {
       this.parser.id = 'invalid-id'
-  
+
       // Simulate fetch failure by setting an invalid ID
       const result = await this.parser.getSpreadsheetDataUsingFetch()
       t.equal(result, null, 'Should return null in case of fetch failure')
-  
+
       t.end()
     })
 
     test('applyHeaderIntoRows method should return expected array when date is included', (t) => {
       const givenHeader = ['a', 'b']
       const givenRows = [
-        { c: [{ v: 'Date(2024,0,1)', f: '2024-01-01' }, { v: 'Date(2024,0,1)', f: '' }] },
+        { c: [{ v: 'Date(2024,0,1)', f: '2024-01-01' }, { v: 'Date(2024,0,1)', f: '' }] }
       ]
 
       this.parser.setOption({ useFormattedDate: true })
@@ -379,7 +379,7 @@ class Test {
     test('applyHeaderIntoRows method should return expected array when useFormat is true', (t) => {
       const givenHeader = ['a', 'b']
       const givenRows = [
-        { c: [{ v: 1000, f: '$1,000' }, { v: 2000, f: '' }] },
+        { c: [{ v: 1000, f: '$1,000' }, { v: 2000, f: '' }] }
       ]
 
       this.parser.setOption({ useFormat: true })

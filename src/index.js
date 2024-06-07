@@ -1,4 +1,4 @@
-const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
 const fetch = isBrowser ? /* istanbul ignore next */window.fetch : require('../src/fetch')
 
 class PublicGoogleSheetsParser {

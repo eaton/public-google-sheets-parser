@@ -1,27 +1,19 @@
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
-const fetch = isBrowser ?
-/* istanbul ignore next */
-window.fetch : require('../src/fetch');
-
+const fetch = isBrowser ? /* istanbul ignore next */window.fetch : require('../src/fetch');
 let PublicGoogleSheetsParser = /*#__PURE__*/function () {
   function PublicGoogleSheetsParser(spreadsheetId, option) {
     _classCallCheck(this, PublicGoogleSheetsParser);
-
     this.id = spreadsheetId;
     this.setOption(option);
   }
-
-  _createClass(PublicGoogleSheetsParser, [{
+  return _createClass(PublicGoogleSheetsParser, [{
     key: "setOption",
     value: function setOption(option) {
       if (!option) {
@@ -51,7 +43,6 @@ let PublicGoogleSheetsParser = /*#__PURE__*/function () {
         if (!this.id) return null;
         let url = `https://docs.google.com/spreadsheets/d/${this.id}/gviz/tq?`;
         url += this.sheetId ? `gid=${this.sheetId}` : `sheet=${this.sheetName}`;
-
         try {
           const response = yield fetch(url);
           return response && response.ok ? response.text() : null;
@@ -59,15 +50,12 @@ let PublicGoogleSheetsParser = /*#__PURE__*/function () {
           /* istanbul ignore next */
           console.error('Error fetching spreadsheet data:', e);
           /* istanbul ignore next */
-
           return null;
         }
       });
-
       function getSpreadsheetDataUsingFetch() {
         return _getSpreadsheetDataUsingFetch.apply(this, arguments);
       }
-
       return getSpreadsheetDataUsingFetch;
     }()
   }, {
@@ -88,7 +76,6 @@ let PublicGoogleSheetsParser = /*#__PURE__*/function () {
     key: "getItems",
     value: function getItems(spreadsheetResponse) {
       let rows = [];
-
       try {
         const payloadExtractRegex = /google\.visualization\.Query\.setResponse\(({.*})\);/;
         const [_, payload] = spreadsheetResponse.match(payloadExtractRegex);
@@ -96,7 +83,6 @@ let PublicGoogleSheetsParser = /*#__PURE__*/function () {
         const hasSomeLabelPropertyInCols = parsedJSON.table.cols.some(({
           label
         }) => !!label);
-
         if (hasSomeLabelPropertyInCols) {
           const header = parsedJSON.table.cols.map(({
             label
@@ -111,7 +97,6 @@ let PublicGoogleSheetsParser = /*#__PURE__*/function () {
         /* istanbul ignore next */
         console.error('Error parsing spreadsheet data:', e);
       }
-
       return rows;
     }
   }, {
@@ -125,20 +110,14 @@ let PublicGoogleSheetsParser = /*#__PURE__*/function () {
         if (spreadsheetResponse === null) return [];
         return this.getItems(spreadsheetResponse);
       });
-
       function parse(_x, _x2) {
         return _parse.apply(this, arguments);
       }
-
       return parse;
     }()
   }]);
-
-  return PublicGoogleSheetsParser;
 }();
 /* istanbul ignore next */
-
-
 if (isBrowser && typeof module === 'undefined') {
   window.PublicGoogleSheetsParser = PublicGoogleSheetsParser;
 } else {
